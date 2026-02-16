@@ -1,0 +1,5 @@
+pre-commit:
+  parallel: false
+  commands:
+    lint-staged:
+      run: pnpm exec lint-staged

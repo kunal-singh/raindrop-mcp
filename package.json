@@ -13,7 +13,12 @@
     "dev": "tsc --watch",
     "clean": "rm -rf dist",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js"
+    "inspector": "npx @modelcontextprotocol/inspector node dist/index.js",
+    "lint": "eslint . --no-warn-ignored",
+    "lint:fix": "eslint . --fix --no-warn-ignored",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "prepare": "lefthook install"
   },
   "keywords": [
     "mcp",
@@ -25,11 +30,24 @@
   "license": "MIT",
   "packageManager": "pnpm@10.17.1",
   "devDependencies": {
+    "@eslint/js": "^9.39.2",
     "@types/node": "^22.0.0",
-    "typescript": "^5.7.0"
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "lefthook": "^2.1.1",
+    "lint-staged": "^16.2.7",
+    "prettier": "^3.8.1",
+    "typescript": "^5.7.0",
+    "typescript-eslint": "^8.55.0"
   },
   "dependencies": {
     "@modelcontextprotocol/sdk": "^1.26.0"
+  },
+  "lint-staged": {
+    "**/*.{ts,tsx}": [
+      "prettier --write",
+      "eslint --cache --fix"
+    ]
   },
   "engines": {
     "node": ">=22.0.0"
