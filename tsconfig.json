@@ -27,5 +27,7 @@
 
     /* Non-DOM environment (Node.js) */
     "lib": ["es2022"]
-  }
+  },
+  "include": ["src"],
+  "exclude": ["node_modules", "dist", "*.config.js"]
 }
