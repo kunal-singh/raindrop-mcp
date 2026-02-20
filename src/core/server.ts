@@ -38,8 +38,8 @@ export class MCPServer {
       },
       {
         capabilities: {
-          ...(toolProvider.hasTools() && { tools: {} }),
-          ...(resourceProvider.hasResources() && { resources: {} }),
+          tools: {},
+          resources: {},
         },
       },
     );

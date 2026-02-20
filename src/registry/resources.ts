@@ -82,13 +82,6 @@ export class ResourceRegistry<TClient> implements IResourceProvider {
   }
 
   /**
-   * Check if a resource is registered
-   */
-  hasResource(uri: string): boolean {
-    return this.resources.has(uri);
-  }
-
-  /**
    * Get the number of registered resources
    */
   get size(): number {

@@ -1,4 +1,4 @@
-import type { ToolDefinition } from '../../types/tool.types.js';
+import type { ToolDefinition } from '../../../types/tool.types.js';
 
 /**
  * Get tags tool definition

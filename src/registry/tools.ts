@@ -83,13 +83,6 @@ export class ToolRegistry<TClient> implements IToolProvider {
   }
 
   /**
-   * Check if a tool is registered
-   */
-  hasTool(name: string): boolean {
-    return this.tools.has(name);
-  }
-
-  /**
    * Get the number of registered tools
    */
   get size(): number {
