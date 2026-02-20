@@ -1,6 +1,6 @@
 import type { ServerManifest } from '../types/manifest.types.js';
-import { ToolRegistry } from '../tools/registry.js';
-import { ResourceRegistry } from '../resources/registry.js';
+import { ToolRegistry } from '../registry/tools.js';
+import { ResourceRegistry } from '../registry/resources.js';
 import type { RaindropClient } from '../api/raindrop-client.js';
 
 // Tool definitions
@@ -13,7 +13,7 @@ import {
   createCollectionTool,
   deleteCollectionTool,
   getTagsTool,
-} from '../tools/definitions/index.js';
+} from './tools/definitions/index.js';
 
 // Tool handlers
 import {
@@ -25,11 +25,11 @@ import {
   createCollectionHandler,
   deleteCollectionHandler,
   getTagsHandler,
-} from '../tools/handlers/index.js';
+} from './tools/handlers/index.js';
 
 // Resource definitions and handlers
-import { allBookmarksResource } from '../resources/definitions/index.js';
-import { allBookmarksHandler } from '../resources/handlers/index.js';
+import { allBookmarksResource } from './resources/definitions/index.js';
+import { allBookmarksHandler } from './resources/handlers/index.js';
 
 /**
  * Build the complete Raindrop.io MCP server manifest
