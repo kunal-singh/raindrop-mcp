@@ -5,30 +5,30 @@ import {
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
-import type { ToolRegistry } from '../tools/registry.js';
-import type { ResourceRegistry } from '../resources/registry.js';
+import type {
+  IToolProvider,
+  IResourceProvider,
+} from '../types/providers.types.js';
 import type { AppConfig } from '../types/config.types.js';
 import { logger } from '../lib/logger.js';
 
 /**
  * MCP Server wrapper with lifecycle management
- * Handles request routing to registries
+ * Handles request routing to providers
+ * Core infrastructure - knows nothing about specific API implementations
  */
-export class MCPServer<TClient> {
+export class MCPServer {
   private server: Server;
-  private client: TClient;
-  private toolRegistry: ToolRegistry<TClient>;
-  private resourceRegistry: ResourceRegistry<TClient>;
+  private toolProvider: IToolProvider;
+  private resourceProvider: IResourceProvider;
 
   constructor(
     config: AppConfig,
-    client: TClient,
-    toolRegistry: ToolRegistry<TClient>,
-    resourceRegistry: ResourceRegistry<TClient>,
+    toolProvider: IToolProvider,
+    resourceProvider: IResourceProvider,
   ) {
-    this.client = client;
-    this.toolRegistry = toolRegistry;
-    this.resourceRegistry = resourceRegistry;
+    this.toolProvider = toolProvider;
+    this.resourceProvider = resourceProvider;
 
     // Initialize MCP SDK server
     this.server = new Server(
@@ -38,8 +38,8 @@ export class MCPServer<TClient> {
       },
       {
         capabilities: {
-          resources: {},
-          tools: {},
+          ...(toolProvider.hasTools() && { tools: {} }),
+          ...(resourceProvider.hasResources() && { resources: {} }),
         },
       },
     );
@@ -55,7 +55,7 @@ export class MCPServer<TClient> {
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
       logger.debug('Handling ListTools request');
       return {
-        tools: this.toolRegistry.listTools(),
+        tools: this.toolProvider.listTools(),
       };
     });
 
@@ -64,11 +64,7 @@ export class MCPServer<TClient> {
       const { name, arguments: args } = request.params;
       logger.debug('Handling CallTool request', { name, args });
 
-      const result = await this.toolRegistry.executeTool(
-        name,
-        args || {},
-        this.client,
-      );
+      const result = await this.toolProvider.executeTool(name, args || {});
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
       return result as any; // SDK will validate the shape
     });
@@ -77,7 +73,7 @@ export class MCPServer<TClient> {
     this.server.setRequestHandler(ListResourcesRequestSchema, async () => {
       logger.debug('Handling ListResources request');
       return {
-        resources: this.resourceRegistry.listResources(),
+        resources: this.resourceProvider.listResources(),
       };
     });
 
@@ -88,10 +84,7 @@ export class MCPServer<TClient> {
         const { uri } = request.params;
         logger.debug('Handling ReadResource request', { uri });
 
-        const result = await this.resourceRegistry.readResource(
-          uri,
-          this.client,
-        );
+        const result = await this.resourceProvider.readResource(uri);
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         return result as any; // SDK will validate the shape
       },

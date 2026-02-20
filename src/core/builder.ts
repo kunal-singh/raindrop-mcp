@@ -1,18 +1,15 @@
 import { MCPServer } from './server.js';
-import { ToolRegistry } from '../tools/registry.js';
-import { ResourceRegistry } from '../resources/registry.js';
 import type { AppConfig } from '../types/config.types.js';
+import type { ServerManifest } from '../types/manifest.types.js';
 import type { ITransport } from './transport/index.js';
 
 /**
  * Builder for constructing MCP servers with fluent API
  * Validates all dependencies are provided before building
  */
-export class MCPServerBuilder<TClient> {
+export class MCPServerBuilder {
   private config?: AppConfig;
-  private client?: TClient;
-  private toolRegistry?: ToolRegistry<TClient>;
-  private resourceRegistry?: ResourceRegistry<TClient>;
+  private manifest?: ServerManifest;
   private transport?: ITransport;
 
   private constructor() {}
@@ -20,8 +17,8 @@ export class MCPServerBuilder<TClient> {
   /**
    * Create a new server builder
    */
-  static create<TClient>(): MCPServerBuilder<TClient> {
-    return new MCPServerBuilder<TClient>();
+  static create(): MCPServerBuilder {
+    return new MCPServerBuilder();
   }
 
   /**
@@ -33,26 +30,10 @@ export class MCPServerBuilder<TClient> {
   }
 
   /**
-   * Set the API client
+   * Set the server manifest (tools, resources, etc.)
    */
-  withClient(client: TClient): this {
-    this.client = client;
-    return this;
-  }
-
-  /**
-   * Set the tool registry
-   */
-  withToolRegistry(registry: ToolRegistry<TClient>): this {
-    this.toolRegistry = registry;
-    return this;
-  }
-
-  /**
-   * Set the resource registry
-   */
-  withResourceRegistry(registry: ResourceRegistry<TClient>): this {
-    this.resourceRegistry = registry;
+  withManifest(manifest: ServerManifest): this {
+    this.manifest = manifest;
     return this;
   }
 
@@ -68,22 +49,14 @@ export class MCPServerBuilder<TClient> {
    * Build the MCP server
    * @throws {Error} If any required dependency is missing
    */
-  async build(): Promise<MCPServer<TClient>> {
+  async build(): Promise<MCPServer> {
     // Validate all dependencies
     if (!this.config) {
       throw new Error('Config is required. Call withConfig() before build()');
     }
-    if (!this.client) {
-      throw new Error('Client is required. Call withClient() before build()');
-    }
-    if (!this.toolRegistry) {
+    if (!this.manifest) {
       throw new Error(
-        'Tool registry is required. Call withToolRegistry() before build()',
-      );
-    }
-    if (!this.resourceRegistry) {
-      throw new Error(
-        'Resource registry is required. Call withResourceRegistry() before build()',
+        'Manifest is required. Call withManifest() before build()',
       );
     }
     if (!this.transport) {
@@ -92,17 +65,16 @@ export class MCPServerBuilder<TClient> {
       );
     }
 
-    // Create server (non-null assertion safe due to validation above)
+    // Create server
     const server = new MCPServer(
       this.config,
-      this.client as NonNullable<TClient>,
-      this.toolRegistry as ToolRegistry<NonNullable<TClient>>,
-      this.resourceRegistry as ResourceRegistry<NonNullable<TClient>>,
+      this.manifest.tools,
+      this.manifest.resources,
     );
 
     // Connect transport
     await this.transport.connect(server.getServer());
 
-    return server as MCPServer<TClient>;
+    return server;
   }
 }

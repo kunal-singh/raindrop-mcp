@@ -3,6 +3,7 @@ import type {
   ToolRegistration,
   ToolResponse,
 } from '../types/tool.types.js';
+import type { IToolProvider } from '../types/providers.types.js';
 import { formatErrorResponse } from '../lib/response-formatter.js';
 import { HandlerError } from '../core/errors/index.js';
 
@@ -10,8 +11,13 @@ import { HandlerError } from '../core/errors/index.js';
  * Tool registry for managing tool definitions and handlers
  * Provides tool discovery and execution routing
  */
-export class ToolRegistry<TClient> {
+export class ToolRegistry<TClient> implements IToolProvider {
   private tools = new Map<string, ToolRegistration<TClient>>();
+  private client: TClient;
+
+  constructor(client: TClient) {
+    this.client = client;
+  }
 
   /**
    * Register a tool with its definition and handler
@@ -46,15 +52,9 @@ export class ToolRegistry<TClient> {
    * Execute a tool by name
    * @param name - Tool name
    * @param args - Tool arguments
-   * @param client - API client instance
    * @returns Tool execution result
    */
-  async executeTool(
-    name: string,
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    args: any,
-    client: TClient,
-  ): Promise<ToolResponse> {
+  async executeTool(name: string, args: unknown): Promise<ToolResponse> {
     const registration = this.tools.get(name);
 
     if (!registration) {
@@ -62,7 +62,7 @@ export class ToolRegistry<TClient> {
     }
 
     try {
-      const result = await registration.handler(args, client);
+      const result = await registration.handler(args, this.client);
       return result;
     } catch (error) {
       // Wrap execution errors
@@ -73,6 +73,13 @@ export class ToolRegistry<TClient> {
       );
       return formatErrorResponse(handlerError);
     }
+  }
+
+  /**
+   * Check if registry has any tools
+   */
+  hasTools(): boolean {
+    return this.tools.size > 0;
   }
 
   /**

@@ -3,14 +3,20 @@ import type {
   ResourceRegistration,
   ResourceResponse,
 } from '../types/resource.types.js';
+import type { IResourceProvider } from '../types/providers.types.js';
 import { HandlerError } from '../core/errors/index.js';
 
 /**
  * Resource registry for managing resource definitions and handlers
  * Provides resource discovery and fetching
  */
-export class ResourceRegistry<TClient> {
+export class ResourceRegistry<TClient> implements IResourceProvider {
   private resources = new Map<string, ResourceRegistration<TClient>>();
+  private client: TClient;
+
+  constructor(client: TClient) {
+    this.client = client;
+  }
 
   /**
    * Register a resource with its definition and handler
@@ -44,10 +50,9 @@ export class ResourceRegistry<TClient> {
   /**
    * Read a resource by URI
    * @param uri - Resource URI
-   * @param client - API client instance
    * @returns Resource content
    */
-  async readResource(uri: string, client: TClient): Promise<ResourceResponse> {
+  async readResource(uri: string): Promise<ResourceResponse> {
     const registration = this.resources.get(uri);
 
     if (!registration) {
@@ -55,7 +60,7 @@ export class ResourceRegistry<TClient> {
     }
 
     try {
-      const content = await registration.handler(uri, client);
+      const content = await registration.handler(uri, this.client);
       return {
         contents: [content],
       };
@@ -67,6 +72,13 @@ export class ResourceRegistry<TClient> {
         error instanceof Error ? error : undefined,
       );
     }
+  }
+
+  /**
+   * Check if registry has any resources
+   */
+  hasResources(): boolean {
+    return this.resources.size > 0;
   }
 
   /**
