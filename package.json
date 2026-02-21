@@ -35,7 +35,8 @@
     "lint:fix": "eslint . --fix --no-warn-ignored",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "prepare": "lefthook install"
+    "prepare": "lefthook install",
+    "inspect": "mcp-inspector node dist/main.js"
   },
   "keywords": [
     "mcp",
@@ -48,6 +49,7 @@
   "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "@eslint/js": "^9.39.2",
+    "@modelcontextprotocol/inspector": "^0.20.0",
     "@types/node": "^22.0.0",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
