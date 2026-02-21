@@ -1,4 +1,4 @@
-import { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import { Server } from '@modelcontextprotocol/sdk/server';
 import {
   CallToolRequestSchema,
   ListResourcesRequestSchema,
@@ -8,9 +8,9 @@ import {
 import type {
   IToolProvider,
   IResourceProvider,
-} from '../types/providers.types.js';
-import type { AppConfig } from '../types/config.types.js';
-import { logger } from '../lib/logger.js';
+} from '../types/providers.types';
+import type { AppConfig } from '../types/config.types';
+import { logger } from '../lib/logger';
 
 /**
  * MCP Server wrapper with lifecycle management

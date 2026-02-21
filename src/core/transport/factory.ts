@@ -1,6 +1,6 @@
-import type { ITransport } from './transport.interface.js';
-import { StdioTransport } from './stdio.transport.js';
-import type { AppConfig } from '../../types/config.types.js';
+import type { ITransport } from './transport.interface';
+import { StdioTransport } from './stdio.transport';
+import type { AppConfig } from '../../types/config.types';
 
 /**
  * Factory for creating transport instances based on configuration

@@ -1,6 +1,6 @@
-import { ConfigSchema } from './schema.js';
-import type { AppConfig } from '../types/config.types.js';
-import { SERVER_METADATA } from './server-metadata.js';
+import { ConfigSchema } from './schema';
+import type { AppConfig } from '../types/config.types';
+import { SERVER_METADATA } from './server-metadata';
 
 /**
  * Load and validate configuration from environment variables

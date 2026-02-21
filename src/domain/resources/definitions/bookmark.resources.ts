@@ -1,4 +1,4 @@
-import type { ResourceDefinition } from '../../../types/resource.types.js';
+import type { ResourceDefinition } from '../../../types/resource.types';
 
 /**
  * All bookmarks resource definition

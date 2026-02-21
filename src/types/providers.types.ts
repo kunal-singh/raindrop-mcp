@@ -1,5 +1,5 @@
-import type { ToolDefinition, ToolResponse } from './tool.types.js';
-import type { ResourceDefinition, ResourceResponse } from './resource.types.js';
+import type { ToolDefinition, ToolResponse } from './tool.types';
+import type { ResourceDefinition, ResourceResponse } from './resource.types';
 
 /**
  * Provider interface for MCP tools

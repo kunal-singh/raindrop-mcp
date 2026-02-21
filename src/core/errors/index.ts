@@ -1,8 +1,8 @@
-export { BaseError, ConfigurationError } from './base-error.js';
+export { BaseError, ConfigurationError } from './base-error';
 export {
   APIError,
   NetworkError,
   AuthenticationError,
   RateLimitError,
-} from './api-error.js';
-export { ToolError, ValidationError, HandlerError } from './tool-error.js';
+} from './api-error';
+export { ToolError, ValidationError, HandlerError } from './tool-error';

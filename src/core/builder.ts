@@ -1,7 +1,7 @@
-import { MCPServer } from './server.js';
-import type { AppConfig } from '../types/config.types.js';
-import type { ServerManifest } from '../types/manifest.types.js';
-import type { ITransport } from './transport/index.js';
+import { MCPServer } from './server';
+import type { AppConfig } from '../types/config.types';
+import type { ServerManifest } from '../types/manifest.types';
+import type { ITransport } from './transport';
 
 /**
  * Builder for constructing MCP servers with fluent API

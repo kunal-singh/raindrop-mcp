@@ -1,8 +1,8 @@
 import type {
   ResourceHandler,
   ResourceContent,
-} from '../../../types/resource.types.js';
-import type { RaindropClient } from '../../../api/raindrop-client.js';
+} from '../../../types/resource.types';
+import type { RaindropClient } from '../../api/raindrop-client';
 
 /**
  * All bookmarks resource handler

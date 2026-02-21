@@ -1,5 +1,5 @@
-import type { ToolResponse } from '../types/tool.types.js';
-import { BaseError } from '../core/errors/index.js';
+import type { ToolResponse } from '../types/tool.types';
+import { BaseError } from '../core/errors';
 
 /**
  * Format successful tool response for MCP protocol

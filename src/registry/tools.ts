@@ -2,10 +2,10 @@ import type {
   ToolDefinition,
   ToolRegistration,
   ToolResponse,
-} from '../types/tool.types.js';
-import type { IToolProvider } from '../types/providers.types.js';
-import { formatErrorResponse } from '../lib/response-formatter.js';
-import { HandlerError } from '../core/errors/index.js';
+} from '../types/tool.types';
+import type { IToolProvider } from '../types/providers.types';
+import { formatErrorResponse } from '../lib/response-formatter';
+import { HandlerError } from '../core/errors/index';
 
 /**
  * Tool registry for managing tool definitions and handlers

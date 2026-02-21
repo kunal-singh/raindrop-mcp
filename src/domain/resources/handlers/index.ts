@@ -1,1 +1,1 @@
-export { allBookmarksHandler } from './bookmark.handler.js';
+export { allBookmarksHandler } from './bookmark.handler';

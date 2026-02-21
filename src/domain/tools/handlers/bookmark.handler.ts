@@ -1,6 +1,6 @@
-import type { ToolHandler } from '../../../types/tool.types.js';
-import type { RaindropClient } from '../../../api/raindrop-client.js';
-import { formatToolResponse } from '../../../lib/response-formatter.js';
+import type { ToolHandler } from '../../../types/tool.types';
+import type { RaindropClient } from '../../api/raindrop-client';
+import { formatToolResponse } from '../../../lib/response-formatter';
 
 /**
  * Search bookmarks handler

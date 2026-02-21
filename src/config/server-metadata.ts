@@ -1,4 +1,4 @@
-import type { ServerMetadata } from '../types/config.types.js';
+import type { ServerMetadata } from '../types/config.types';
 
 /**
  * Static server metadata

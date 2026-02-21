@@ -1,4 +1,4 @@
-import type { IToolProvider, IResourceProvider } from './providers.types.js';
+import type { IToolProvider, IResourceProvider } from './providers.types';
 
 /**
  * Server manifest declaring all capabilities a specific MCP server provides

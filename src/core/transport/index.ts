@@ -1,3 +1,3 @@
-export type { ITransport } from './transport.interface.js';
-export { StdioTransport } from './stdio.transport.js';
-export { createTransport } from './factory.js';
+export type { ITransport } from './transport.interface';
+export { StdioTransport } from './stdio.transport';
+export { createTransport } from './factory';

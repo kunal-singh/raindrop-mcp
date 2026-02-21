@@ -1,10 +1,10 @@
-import type { RequestOptions } from '../types/api.types.js';
+import type { RequestOptions } from '../../types/api.types';
 import {
   APIError,
   NetworkError,
   AuthenticationError,
   RateLimitError,
-} from '../core/errors/index.js';
+} from '../../core/errors/index';
 
 /**
  * Base HTTP client for external APIs

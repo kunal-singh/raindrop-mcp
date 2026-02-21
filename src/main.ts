@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 
-import { bootstrap } from './bootstrap.js';
-import { logger } from './lib/logger.js';
+import { bootstrap } from './bootstrap';
+import { logger } from './lib/logger';
 
 /**
  * Main entry point

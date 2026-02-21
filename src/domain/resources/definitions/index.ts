@@ -1,1 +1,1 @@
-export { allBookmarksResource } from './bookmark.resources.js';
+export { allBookmarksResource } from './bookmark.resources';

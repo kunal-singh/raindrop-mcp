@@ -1,9 +1,9 @@
-import { loadConfig } from './config/environment.js';
-import { RaindropClient } from './api/raindrop-client.js';
-import { buildRaindropManifest } from './domain/manifest.js';
-import { MCPServerBuilder } from './core/builder.js';
-import { createTransport } from './core/transport/index.js';
-import { logger } from './lib/logger.js';
+import { loadConfig } from './config/environment';
+import { RaindropClient } from './domain/api/raindrop-client';
+import { buildRaindropManifest } from './domain/manifest';
+import { MCPServerBuilder } from './core/builder';
+import { createTransport } from './core/transport/index';
+import { logger } from './lib/logger';
 
 /**
  * Bootstrap the MCP server

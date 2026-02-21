@@ -1,4 +1,4 @@
-import { HttpClientBase } from './http-client.base.js';
+import { HttpClientBase } from './http-client.base';
 
 /**
  * Raindrop.io API client
