@@ -68,7 +68,7 @@
     "**/*.{ts,js,json,md,yml,yaml}": [
       "prettier --write"
     ],
-    "**/*.{ts}": [
+    "**/*.ts": [
       "eslint --cache --fix"
     ]
   },
