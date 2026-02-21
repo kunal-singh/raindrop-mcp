@@ -1,6 +1,6 @@
 # raindrop-mcp
 
-[![CI](https://github.com/kunal-singh/raindrop-mcp/actions/workflows/ci.yml/badge.svg)](https://github.com/kunal-singh/raindrop-mcp/actions/workflows/ci.yml)
+[![CI](https://github.com/kunal-singh/raindrop-mcp/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/kunal-singh/raindrop-mcp/actions/workflows/ci.yml)
 
 MCP for raindrop.io bookmark service in Node.js
 
