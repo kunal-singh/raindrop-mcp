@@ -78,11 +78,11 @@ Add this to Cursor's MCP settings (e.g. `.cursor/mcp.json` or Cursor Settings â†
 
 Any MCP client that supports stdio can use:
 
-| Option | Value |
-|--------|-------|
-| Command | `node` (or full path to Node binary) |
-| Args | `["/path/to/raindrop-mcp/dist/main.js"]` |
-| Env | `RAINDROP_TOKEN=your-api-token` |
+| Option  | Value                                    |
+| ------- | ---------------------------------------- |
+| Command | `node` (or full path to Node binary)     |
+| Args    | `["/path/to/raindrop-mcp/dist/main.js"]` |
+| Env     | `RAINDROP_TOKEN=your-api-token`          |
 
 Optional env vars:
 
@@ -92,12 +92,12 @@ Optional env vars:
 
 ### Bookmarks
 
-| Tool | Description |
-|------|-------------|
+| Tool               | Description                                                                  |
+| ------------------ | ---------------------------------------------------------------------------- |
 | `search_bookmarks` | Search bookmarks with optional filters (query, collection, sort, pagination) |
-| `create_bookmark` | Create a new bookmark with URL, title, excerpt, tags, and collection |
-| `update_bookmark` | Update an existing bookmark by ID |
-| `delete_bookmark` | Delete a bookmark (moves to trash) |
+| `create_bookmark`  | Create a new bookmark with URL, title, excerpt, tags, and collection         |
+| `update_bookmark`  | Update an existing bookmark by ID                                            |
+| `delete_bookmark`  | Delete a bookmark (moves to trash)                                           |
 
 **`search_bookmarks` parameters:**
 
@@ -126,10 +126,10 @@ Optional env vars:
 
 ### Collections
 
-| Tool | Description |
-|------|-------------|
-| `list_collections` | List all collections |
-| `create_collection` | Create a new collection |
+| Tool                | Description               |
+| ------------------- | ------------------------- |
+| `list_collections`  | List all collections      |
+| `create_collection` | Create a new collection   |
 | `delete_collection` | Delete a collection by ID |
 
 **`create_collection` parameters:**
@@ -144,8 +144,8 @@ Optional env vars:
 
 ### Tags
 
-| Tool | Description |
-|------|-------------|
+| Tool       | Description                                     |
+| ---------- | ----------------------------------------------- |
 | `get_tags` | Get all tags, optionally filtered by collection |
 
 **`get_tags` parameters:**
@@ -154,8 +154,8 @@ Optional env vars:
 
 ## Resources
 
-| Resource URI | Description |
-|--------------|-------------|
+| Resource URI               | Description                        |
+| -------------------------- | ---------------------------------- |
 | `raindrop://bookmarks/all` | All your Raindrop bookmarks (JSON) |
 
 ## Development
