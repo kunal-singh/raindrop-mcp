@@ -1,7 +1,9 @@
 import type { ServerManifest } from '../types/manifest.types';
 import { ToolRegistry } from '../registry/tools';
 import { ResourceRegistry } from '../registry/resources';
-import type { RaindropClient } from './api/raindrop-client';
+import type { IRaindropClient } from './api/raindrop-client.interface';
+import { CachedRaindropClient } from './api/cached-raindrop-client';
+import { logger } from '../lib/logger';
 
 // Tool definitions
 import {
@@ -40,9 +42,11 @@ import { allBookmarksHandler } from './resources/handlers';
  * @param client - Raindrop API client instance
  * @returns Complete server manifest with all providers
  */
-export function buildRaindropManifest(client: RaindropClient): ServerManifest {
+export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
+  const cachedClient = new CachedRaindropClient(client);
+
   // Construct and populate tool registry
-  const toolRegistry = new ToolRegistry(client);
+  const toolRegistry = new ToolRegistry(cachedClient);
   toolRegistry.registerMany([
     { definition: searchBookmarksTool, handler: searchBookmarksHandler },
     { definition: createBookmarkTool, handler: createBookmarkHandler },
@@ -55,7 +59,7 @@ export function buildRaindropManifest(client: RaindropClient): ServerManifest {
   ]);
 
   // Construct and populate resource registry
-  const resourceRegistry = new ResourceRegistry(client);
+  const resourceRegistry = new ResourceRegistry(cachedClient);
   resourceRegistry.register({
     definition: allBookmarksResource,
     handler: allBookmarksHandler,
@@ -66,4 +70,34 @@ export function buildRaindropManifest(client: RaindropClient): ServerManifest {
     resources: resourceRegistry,
     // prompts: promptRegistry,  // uncomment when prompts are implemented
   };
+}
+
+/**
+ * Pre-warm the cache by fetching all cacheable endpoints at startup.
+ * Failures are non-fatal — the cache will populate lazily on first request.
+ *
+ * @param client - Must be a CachedRaindropClient instance for warming to have effect
+ */
+export async function primeCache(client: IRaindropClient): Promise<void> {
+  const endpoints = [
+    { name: 'collections', fn: () => client.getCollections() },
+    { name: 'tags', fn: () => client.getTags() },
+    { name: 'bookmarks', fn: () => client.getRaindrops(0, { perpage: 50 }) },
+  ];
+
+  await Promise.allSettled(
+    endpoints.map(async ({ name, fn }) => {
+      try {
+        await fn();
+        logger.info(`Cache warmed: ${name}`);
+      } catch (error) {
+        logger.warn(
+          `Cache warm failed for ${name}, will populate on first request`,
+          {
+            error: error instanceof Error ? error.message : String(error),
+          },
+        );
+      }
+    }),
+  );
 }

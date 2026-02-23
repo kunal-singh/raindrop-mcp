@@ -1,11 +1,11 @@
 import type { ToolHandler } from '../../../types/tool.types';
-import type { RaindropClient } from '../../api/raindrop-client';
+import type { IRaindropClient } from '../../api/raindrop-client.interface';
 import { formatToolResponse } from '../../../lib/response-formatter';
 
 /**
  * List collections handler
  */
-export const listCollectionsHandler: ToolHandler<RaindropClient> = async (
+export const listCollectionsHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
@@ -16,7 +16,7 @@ export const listCollectionsHandler: ToolHandler<RaindropClient> = async (
 /**
  * Create collection handler
  */
-export const createCollectionHandler: ToolHandler<RaindropClient> = async (
+export const createCollectionHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
@@ -31,7 +31,7 @@ export const createCollectionHandler: ToolHandler<RaindropClient> = async (
 /**
  * Delete collection handler
  */
-export const deleteCollectionHandler: ToolHandler<RaindropClient> = async (
+export const deleteCollectionHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
