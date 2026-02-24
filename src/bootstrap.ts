@@ -22,7 +22,11 @@ export async function bootstrap() {
   const manifest = buildRaindropManifest(cachedClient);
 
   logger.info('Warming cache...');
-  await primeCache(cachedClient);
+  primeCache(cachedClient).catch((error) => {
+    logger.warn('Cache warm-up failed, will populate lazily', {
+      error: error instanceof Error ? error.message : String(error),
+    });
+  });
 
   logger.info('Creating transport...');
   const transport = createTransport(config);
