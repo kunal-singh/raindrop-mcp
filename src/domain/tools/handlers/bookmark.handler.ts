@@ -1,11 +1,11 @@
 import type { ToolHandler } from '../../../types/tool.types';
-import type { RaindropClient } from '../../api/raindrop-client';
+import type { IRaindropClient } from '../../api/raindrop-client.interface';
 import { formatToolResponse } from '../../../lib/response-formatter';
 
 /**
  * Search bookmarks handler
  */
-export const searchBookmarksHandler: ToolHandler<RaindropClient> = async (
+export const searchBookmarksHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
@@ -21,7 +21,7 @@ export const searchBookmarksHandler: ToolHandler<RaindropClient> = async (
 /**
  * Create bookmark handler
  */
-export const createBookmarkHandler: ToolHandler<RaindropClient> = async (
+export const createBookmarkHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
@@ -39,7 +39,7 @@ export const createBookmarkHandler: ToolHandler<RaindropClient> = async (
 /**
  * Update bookmark handler
  */
-export const updateBookmarkHandler: ToolHandler<RaindropClient> = async (
+export const updateBookmarkHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {
@@ -57,7 +57,7 @@ export const updateBookmarkHandler: ToolHandler<RaindropClient> = async (
 /**
  * Delete bookmark handler
  */
-export const deleteBookmarkHandler: ToolHandler<RaindropClient> = async (
+export const deleteBookmarkHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {

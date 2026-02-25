@@ -1,10 +1,11 @@
 import { HttpClientBase } from './http-client.base';
+import type { IRaindropClient } from './raindrop-client.interface';
 
 /**
  * Raindrop.io API client
  * Extends HttpClientBase with Raindrop-specific methods
  */
-export class RaindropClient extends HttpClientBase {
+export class RaindropClient extends HttpClientBase implements IRaindropClient {
   constructor(token: string) {
     super('https://api.raindrop.io/rest/v1', token);
   }

@@ -1,11 +1,11 @@
 import type { ToolHandler } from '../../../types/tool.types';
-import type { RaindropClient } from '../../api/raindrop-client';
+import type { IRaindropClient } from '../../api/raindrop-client.interface';
 import { formatToolResponse } from '../../../lib/response-formatter';
 
 /**
  * Get tags handler
  */
-export const getTagsHandler: ToolHandler<RaindropClient> = async (
+export const getTagsHandler: ToolHandler<IRaindropClient> = async (
   args,
   client,
 ) => {

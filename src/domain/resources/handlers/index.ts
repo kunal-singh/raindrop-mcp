@@ -1,1 +1,2 @@
-export { allBookmarksHandler } from './bookmark.handler';
+export { collectionsHandler } from './collection.handler';
+export { tagsHandler } from './tag.handler';

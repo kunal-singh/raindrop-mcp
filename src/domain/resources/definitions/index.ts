@@ -1,1 +1,2 @@
-export { allBookmarksResource } from './bookmark.resources';
+export { collectionsResource } from './collection.resources';
+export { tagsResource } from './tag.resources';

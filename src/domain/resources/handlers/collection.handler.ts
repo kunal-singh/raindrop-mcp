@@ -2,16 +2,13 @@ import type {
   ResourceHandler,
   ResourceContent,
 } from '../../../types/resource.types';
-import type { RaindropClient } from '../../api/raindrop-client';
+import type { IRaindropClient } from '../../api/raindrop-client.interface';
 
-/**
- * All bookmarks resource handler
- */
-export const allBookmarksHandler: ResourceHandler<RaindropClient> = async (
+export const collectionsHandler: ResourceHandler<IRaindropClient> = async (
   uri,
   client,
 ): Promise<ResourceContent> => {
-  const result = await client.getRaindrops(0, { perpage: 50 });
+  const result = await client.getCollections();
 
   return {
     uri,
