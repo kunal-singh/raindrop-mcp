@@ -8,8 +8,6 @@ const CACHE_KEYS = {
   collections: 'collections',
   tags: (collectionId?: number) =>
     collectionId ? `tags:${collectionId}` : 'tags',
-  raindrops: (collectionId: number, options: object) =>
-    `raindrops:${collectionId}:${JSON.stringify(options)}`,
 } as const;
 
 export class CachedRaindropClient implements IRaindropClient {
@@ -43,16 +41,7 @@ export class CachedRaindropClient implements IRaindropClient {
       perpage?: number;
     } = {},
   ): Promise<unknown> {
-    const key = CACHE_KEYS.raindrops(collectionId, options);
-    const cached = this.cache.get(key);
-    if (cached !== undefined) {
-      logger.debug('Cache hit', { key });
-      return cached;
-    }
-    logger.debug('Cache miss', { key });
-    const result = await this.client.getRaindrops(collectionId, options);
-    this.cache.set(key, result);
-    return result;
+    return this.client.getRaindrops(collectionId, options);
   }
 
   async getTags(collectionId?: number): Promise<unknown> {

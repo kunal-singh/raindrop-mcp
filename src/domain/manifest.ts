@@ -30,8 +30,8 @@ import {
 } from './tools/handlers';
 
 // Resource definitions and handlers
-import { allBookmarksResource } from './resources/definitions';
-import { allBookmarksHandler } from './resources/handlers';
+import { collectionsResource, tagsResource } from './resources/definitions';
+import { collectionsHandler, tagsHandler } from './resources/handlers';
 
 /**
  * Build the complete Raindrop.io MCP server manifest
@@ -60,10 +60,10 @@ export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
 
   // Construct and populate resource registry
   const resourceRegistry = new ResourceRegistry(cachedClient);
-  resourceRegistry.register({
-    definition: allBookmarksResource,
-    handler: allBookmarksHandler,
-  });
+  resourceRegistry.registerMany([
+    { definition: collectionsResource, handler: collectionsHandler },
+    { definition: tagsResource, handler: tagsHandler },
+  ]);
 
   return {
     tools: toolRegistry,
@@ -82,7 +82,6 @@ export async function primeCache(client: IRaindropClient): Promise<void> {
   const endpoints = [
     { name: 'collections', fn: () => client.getCollections() },
     { name: 'tags', fn: () => client.getTags() },
-    { name: 'bookmarks', fn: () => client.getRaindrops(0, { perpage: 50 }) },
   ];
 
   await Promise.allSettled(
