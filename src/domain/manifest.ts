@@ -1,6 +1,7 @@
 import type { ServerManifest } from '../types/manifest.types';
 import { ToolRegistry } from '../registry/tools';
 import { ResourceRegistry } from '../registry/resources';
+import { PromptRegistry } from '../registry/prompts';
 import type { IRaindropClient } from './api/raindrop-client.interface';
 import { CachedRaindropClient } from './api/cached-raindrop-client';
 import { logger } from '../lib/logger';
@@ -65,10 +66,14 @@ export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
     { definition: tagsResource, handler: tagsHandler },
   ]);
 
+  // Construct and populate prompt registry
+  const promptRegistry = new PromptRegistry(cachedClient);
+  promptRegistry.registerMany([]);
+
   return {
     tools: toolRegistry,
     resources: resourceRegistry,
-    // prompts: promptRegistry,  // uncomment when prompts are implemented
+    prompts: promptRegistry,
   };
 }
 

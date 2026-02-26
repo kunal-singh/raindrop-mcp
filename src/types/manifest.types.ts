@@ -1,4 +1,8 @@
-import type { IToolProvider, IResourceProvider } from './providers.types';
+import type {
+  IToolProvider,
+  IResourceProvider,
+  IPromptProvider,
+} from './providers.types';
 
 /**
  * Server manifest declaring all capabilities a specific MCP server provides
@@ -7,6 +11,5 @@ import type { IToolProvider, IResourceProvider } from './providers.types';
 export interface ServerManifest {
   tools: IToolProvider;
   resources: IResourceProvider;
-  // Uncomment when prompts are implemented:
-  // prompts?: IPromptProvider;
+  prompts?: IPromptProvider;
 }

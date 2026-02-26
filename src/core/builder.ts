@@ -70,6 +70,7 @@ export class MCPServerBuilder {
       this.config,
       this.manifest.tools,
       this.manifest.resources,
+      this.manifest.prompts,
     );
 
     // Connect transport

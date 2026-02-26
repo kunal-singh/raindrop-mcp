@@ -1,6 +1,8 @@
 import { Server } from '@modelcontextprotocol/sdk/server';
 import {
   CallToolRequestSchema,
+  GetPromptRequestSchema,
+  ListPromptsRequestSchema,
   ListResourcesRequestSchema,
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
@@ -8,6 +10,7 @@ import {
 import type {
   IToolProvider,
   IResourceProvider,
+  IPromptProvider,
 } from '../types/providers.types';
 import type { AppConfig } from '../types/config.types';
 import { logger } from '../lib/logger';
@@ -21,14 +24,17 @@ export class MCPServer {
   private server: Server;
   private toolProvider: IToolProvider;
   private resourceProvider: IResourceProvider;
+  private promptProvider?: IPromptProvider;
 
   constructor(
     config: AppConfig,
     toolProvider: IToolProvider,
     resourceProvider: IResourceProvider,
+    promptProvider?: IPromptProvider,
   ) {
     this.toolProvider = toolProvider;
     this.resourceProvider = resourceProvider;
+    this.promptProvider = promptProvider;
 
     // Initialize MCP SDK server
     this.server = new Server(
@@ -40,6 +46,7 @@ export class MCPServer {
         capabilities: {
           tools: {},
           resources: {},
+          prompts: {},
         },
       },
     );
@@ -89,6 +96,28 @@ export class MCPServer {
         return result as any; // SDK will validate the shape
       },
     );
+
+    // List available prompts
+    this.server.setRequestHandler(ListPromptsRequestSchema, async () => {
+      logger.debug('Handling ListPrompts request');
+      return {
+        prompts: this.promptProvider?.listPrompts() ?? [],
+      };
+    });
+
+    // Get a prompt
+    this.server.setRequestHandler(GetPromptRequestSchema, async (request) => {
+      const { name, arguments: args } = request.params;
+      logger.debug('Handling GetPrompt request', { name, args });
+
+      if (!this.promptProvider) {
+        throw new Error(`Unknown prompt: ${name}`);
+      }
+
+      const result = await this.promptProvider.getPrompt(name, args ?? {});
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any; // SDK will validate the shape
+    });
   }
 
   /**
