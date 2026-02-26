@@ -158,6 +158,162 @@ Optional env vars:
 | -------------------------- | ---------------------------------- |
 | `raindrop://bookmarks/all` | All your Raindrop bookmarks (JSON) |
 
+## Prompts
+
+Prompts are structured templates that guide the AI to perform specific tasks with your bookmarks. Use them when a simple tool call isn't enough — they teach the model how to transform inputs, apply domain logic, and return well-structured outputs.
+
+### `augment_search_query`
+
+**When to use:** Before calling `search_bookmarks` when a simple search is returning poor results. Transforms raw queries into optimised search terms by stripping filler words, expanding abbreviations (ML → machine learning, JS → JavaScript, etc.), and decomposing compound queries.
+
+```
+Use the augment_search_query prompt with query "stuff I saved about making apps faster"
+```
+
+```
+Use augment_search_query for "that react hooks thing I bookmarked"
+```
+
+```
+I'm looking for my notes on distributed systems, use augment_search_query first then search
+```
+
+### `summarise_bookmarks`
+
+Takes a list of bookmark URLs and titles and returns structured summaries. Single link gets a rich detailed summary; multiple links (capped at 5) get one concise paragraph each. Fetch failures are noted inline. If the list exceeds 5 links, you're told upfront which ones were selected.
+
+**Single link:**
+
+```
+Summarise this bookmark for me: { "title": "Attention Is All You Need", "url": "https://arxiv.org/abs/1706.03762" }
+```
+
+```
+Use summarise_bookmarks on my top result from searching "transformer architecture", focus on practical applications
+```
+
+**Multiple links:**
+
+```
+Search for my AI bookmarks in the Machine Learning collection, then summarise the top 5
+```
+
+```
+Find my bookmarks tagged "system-design" and give me a summarise_bookmarks on them, I want to focus on scalability patterns
+```
+
+**Over-limit scenario (tests the cap behaviour):**
+
+```
+Get all my bookmarks from the Frontend collection and summarise them all
+```
+
+This should trigger the 5-link cap message and tell you which ones were selected.
+
+### `match_collection`
+
+Takes a fuzzy collection name and finds the best match from your collections. Behaviour is tiered by confidence:
+
+- **High confidence** — One clear match, no close competitors: proceeds silently
+- **Medium confidence** — Reasonable match but not obvious: returns match but flags for confirmation
+- **Low confidence** — No good match or two equally plausible: returns top 2–3 candidates and asks you to choose
+
+**High confidence (should proceed silently):**
+
+```
+Save https://github.com/vitejs/vite to my JavaScript tools collection
+```
+
+If you only have one collection with JavaScript-related content, this should match without asking.
+
+**Medium confidence (should confirm):**
+
+```
+Save this to my "dev stuff" collection
+```
+
+Intentionally vague — should match something reasonable but flag it.
+
+**Low confidence (should ask):**
+
+```
+Save https://arxiv.org/abs/1706.03762 to my papers folder
+```
+
+If you have both "Research Papers" and "AI Papers" collections, this should surface both and ask you to choose.
+
+### `suggest_tags`
+
+Suggests which existing tags apply to a new bookmark plus any new tags worth creating. Prioritises reusing existing tags to keep your taxonomy clean.
+
+```
+I'm saving https://css-tricks.com/snippets/css/a-guide-to-flexbox/, suggest tags for it
+```
+
+```
+Suggest tags for a bookmark titled "PostgreSQL indexing strategies for large tables" — I want to reuse my existing tags as much as possible
+```
+
+```
+I'm saving a new bookmark about "fine-tuning LLMs on custom datasets", what tags should I use?
+```
+
+### `weekly_digest`
+
+Produces a grouped digest of recently saved bookmarks, organised by collection or topic. Each group gets a short thematic summary; ends with a "Highlights" section for the 2–3 most interesting items.
+
+```
+Get all my bookmarks from the last 7 days and give me a weekly digest
+```
+
+```
+Run weekly_digest on everything I saved this week in my Research and AI collections
+```
+
+```
+I want a digest of my recent saves, period is "February 2026"
+```
+
+### `detect_duplicates`
+
+Checks whether a URL or topic you want to save duplicates or closely overlaps with existing bookmarks. Classifies matches as **Exact** (same URL/content), **Near duplicate** (substantially overlapping), or **Related** (topically similar but distinct).
+
+```
+Before I save https://martinfowler.com/articles/microservices.html, check if I already have something like it
+```
+
+```
+I want to bookmark something about "React performance optimisation", do I already have duplicates?
+```
+
+```
+Check for duplicates before saving this: "Clean Code by Robert Martin summary"
+```
+
+### Chained workflows
+
+These combine multiple prompts in a single request — the most powerful usage pattern. If chained workflows break, it often indicates a misalignment between one prompt's output format and the next prompt's expected input.
+
+```
+Search for my bookmarks about "ML infrastructure", augment the query first, then summarise the top 5 results focusing on production deployment
+```
+
+Chains `augment_search_query` → `search_bookmarks` → `summarise_bookmarks`.
+
+```
+I want to save https://roadmap.sh/system-design to my architecture collection — check for duplicates first, suggest tags, then save it if it's not a duplicate and match the collection name
+```
+
+Chains `detect_duplicates` → `suggest_tags` → `match_collection` → `create_bookmark`.
+
+```
+Give me a digest of everything in my AI collection this week, then tell me what tags are most common across those bookmarks
+```
+
+Chains `weekly_digest` → `suggest_tags` in analytical mode.
+
+**Tip:** Verify each prompt works in isolation before trying chained workflows. If a chain breaks, it will tell you which prompt's output format needs adjustment.
+
 ## Development
 
 ```bash

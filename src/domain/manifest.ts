@@ -1,6 +1,7 @@
 import type { ServerManifest } from '../types/manifest.types';
 import { ToolRegistry } from '../registry/tools';
 import { ResourceRegistry } from '../registry/resources';
+import { PromptRegistry } from '../registry/prompts';
 import type { IRaindropClient } from './api/raindrop-client.interface';
 import { CachedRaindropClient } from './api/cached-raindrop-client';
 import { logger } from '../lib/logger';
@@ -32,6 +33,26 @@ import {
 // Resource definitions and handlers
 import { collectionsResource, tagsResource } from './resources/definitions';
 import { collectionsHandler, tagsHandler } from './resources/handlers';
+
+// Prompt definitions
+import {
+  augmentSearchQueryPrompt,
+  summariseBookmarksPrompt,
+  matchCollectionPrompt,
+  suggestTagsPrompt,
+  weeklyDigestPrompt,
+  detectDuplicatesPrompt,
+} from './prompts/definitions';
+
+// Prompt handlers
+import {
+  augmentSearchQueryHandler,
+  summariseBookmarksHandler,
+  matchCollectionHandler,
+  suggestTagsHandler,
+  weeklyDigestHandler,
+  detectDuplicatesHandler,
+} from './prompts/handlers';
 
 /**
  * Build the complete Raindrop.io MCP server manifest
@@ -65,10 +86,27 @@ export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
     { definition: tagsResource, handler: tagsHandler },
   ]);
 
+  // Construct and populate prompt registry
+  const promptRegistry = new PromptRegistry(cachedClient);
+  promptRegistry.registerMany([
+    {
+      definition: augmentSearchQueryPrompt,
+      handler: augmentSearchQueryHandler,
+    },
+    {
+      definition: summariseBookmarksPrompt,
+      handler: summariseBookmarksHandler,
+    },
+    { definition: matchCollectionPrompt, handler: matchCollectionHandler },
+    { definition: suggestTagsPrompt, handler: suggestTagsHandler },
+    { definition: weeklyDigestPrompt, handler: weeklyDigestHandler },
+    { definition: detectDuplicatesPrompt, handler: detectDuplicatesHandler },
+  ]);
+
   return {
     tools: toolRegistry,
     resources: resourceRegistry,
-    // prompts: promptRegistry,  // uncomment when prompts are implemented
+    prompts: promptRegistry,
   };
 }
 
