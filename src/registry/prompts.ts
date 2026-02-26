@@ -61,10 +61,7 @@ export class PromptRegistry<TClient> implements IPromptProvider {
     }
 
     try {
-      const content = await registration.handler(name, args, this.client);
-      return {
-        contents: [content],
-      };
+      return await registration.handler(name, args, this.client);
     } catch (error) {
       throw new HandlerError(
         `Prompt '${name}' retrieval failed: ${error instanceof Error ? error.message : String(error)}`,

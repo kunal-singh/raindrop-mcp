@@ -1,26 +1,32 @@
-import type { Prompt } from '@modelcontextprotocol/sdk/types.js';
+import type {
+  Prompt,
+  GetPromptResult,
+  PromptMessage,
+} from '@modelcontextprotocol/sdk/types.js';
 
 /**
- * Resource definition matching MCP protocol Resource type
+ * Prompt definition matching MCP protocol Prompt type
  */
 export type PromptDefinition = Prompt;
 
 /**
- * Resource content for MCP protocol
+ * Re-export PromptMessage for use in handlers
  */
-export interface PromptContent {
-  name: string;
-  description: string;
-  parameters: Record<string, unknown>;
-}
+export type { PromptMessage };
 
 /**
- * Generic resource handler function
+ * Prompt response matching MCP protocol GetPromptResult type
+ * Shape: { description?: string; messages: PromptMessage[] }
+ */
+export type PromptResponse = GetPromptResult;
+
+/**
+ * Generic prompt handler function
  * @template TClient - The API client type
  */
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export interface PromptHandler<TClient = any> {
-  (name: string, args: unknown, client: TClient): Promise<PromptContent>;
+  (name: string, args: unknown, client: TClient): Promise<PromptResponse>;
 }
 
 /**
@@ -30,11 +36,4 @@ export interface PromptHandler<TClient = any> {
 export interface PromptRegistration<TClient = any> {
   definition: PromptDefinition;
   handler: PromptHandler<TClient>;
-}
-
-/**
- * MCP resource response format
- */
-export interface PromptResponse {
-  contents: PromptContent[];
 }

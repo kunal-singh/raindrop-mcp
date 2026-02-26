@@ -34,6 +34,10 @@ import {
 import { collectionsResource, tagsResource } from './resources/definitions';
 import { collectionsHandler, tagsHandler } from './resources/handlers';
 
+// Prompt definitions and handlers (empty until prompts are implemented)
+import './prompts/definitions';
+import './prompts/handlers';
+
 /**
  * Build the complete Raindrop.io MCP server manifest
  *
