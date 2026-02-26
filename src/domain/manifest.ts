@@ -34,9 +34,25 @@ import {
 import { collectionsResource, tagsResource } from './resources/definitions';
 import { collectionsHandler, tagsHandler } from './resources/handlers';
 
-// Prompt definitions and handlers (empty until prompts are implemented)
-import './prompts/definitions';
-import './prompts/handlers';
+// Prompt definitions
+import {
+  augmentSearchQueryPrompt,
+  summariseBookmarksPrompt,
+  matchCollectionPrompt,
+  suggestTagsPrompt,
+  weeklyDigestPrompt,
+  detectDuplicatesPrompt,
+} from './prompts/definitions';
+
+// Prompt handlers
+import {
+  augmentSearchQueryHandler,
+  summariseBookmarksHandler,
+  matchCollectionHandler,
+  suggestTagsHandler,
+  weeklyDigestHandler,
+  detectDuplicatesHandler,
+} from './prompts/handlers';
 
 /**
  * Build the complete Raindrop.io MCP server manifest
@@ -72,7 +88,20 @@ export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
 
   // Construct and populate prompt registry
   const promptRegistry = new PromptRegistry(cachedClient);
-  promptRegistry.registerMany([]);
+  promptRegistry.registerMany([
+    {
+      definition: augmentSearchQueryPrompt,
+      handler: augmentSearchQueryHandler,
+    },
+    {
+      definition: summariseBookmarksPrompt,
+      handler: summariseBookmarksHandler,
+    },
+    { definition: matchCollectionPrompt, handler: matchCollectionHandler },
+    { definition: suggestTagsPrompt, handler: suggestTagsHandler },
+    { definition: weeklyDigestPrompt, handler: weeklyDigestHandler },
+    { definition: detectDuplicatesPrompt, handler: detectDuplicatesHandler },
+  ]);
 
   return {
     tools: toolRegistry,
