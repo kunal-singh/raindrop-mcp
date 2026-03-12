@@ -50,6 +50,7 @@
   "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "@kunal-singh/commitlint-config": "latest",
+    "@types/node": "latest",
     "@kunal-singh/eslint-config": "latest",
     "@kunal-singh/prettier-config": "latest",
     "@kunal-singh/typescript-config": "latest",
