@@ -1,4 +1,4 @@
-import { BaseError } from './base-error';
+import { BaseError } from "./base-error";
 
 /**
  * Tool execution errors
@@ -8,7 +8,7 @@ export class ToolError extends BaseError {
     message: string,
     public readonly toolName?: string,
   ) {
-    super(message, 'TOOL_ERROR');
+    super(message, "TOOL_ERROR");
   }
 }
 
@@ -18,7 +18,7 @@ export class ToolError extends BaseError {
 export class ValidationError extends ToolError {
   constructor(message: string, toolName?: string) {
     super(message, toolName);
-    this.name = 'ValidationError';
+    this.name = "ValidationError";
   }
 }
 
@@ -32,6 +32,6 @@ export class HandlerError extends ToolError {
     public override readonly cause?: Error,
   ) {
     super(message, toolName);
-    this.name = 'HandlerError';
+    this.name = "HandlerError";
   }
 }

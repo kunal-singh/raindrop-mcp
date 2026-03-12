@@ -1,8 +1,5 @@
-import type {
-  ResourceHandler,
-  ResourceContent,
-} from '../../../types/resource.types';
-import type { IRaindropClient } from '../../api/raindrop-client.interface';
+import type { ResourceHandler, ResourceContent } from "../../../types/resource.types";
+import type { IRaindropClient } from "../../api/raindrop-client.interface";
 
 export const collectionsHandler: ResourceHandler<IRaindropClient> = async (
   uri,
@@ -12,7 +9,7 @@ export const collectionsHandler: ResourceHandler<IRaindropClient> = async (
 
   return {
     uri,
-    mimeType: 'application/json',
+    mimeType: "application/json",
     text: JSON.stringify(result, null, 2),
   };
 };

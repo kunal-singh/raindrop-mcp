@@ -1,8 +1,5 @@
-import type {
-  PromptHandler,
-  PromptResponse,
-} from '../../../types/prompt.types';
-import type { IRaindropClient } from '../../api/raindrop-client.interface';
+import type { PromptHandler, PromptResponse } from "../../../types/prompt.types";
+import type { IRaindropClient } from "../../api/raindrop-client.interface";
 
 export const weeklyDigestHandler: PromptHandler<IRaindropClient> = async (
   _name,
@@ -13,7 +10,7 @@ export const weeklyDigestHandler: PromptHandler<IRaindropClient> = async (
     period?: string;
   };
 
-  const periodLabel = period ?? 'this week';
+  const periodLabel = period ?? "this week";
   const bookmarks: Array<{
     title: string;
     url: string;
@@ -24,16 +21,16 @@ export const weeklyDigestHandler: PromptHandler<IRaindropClient> = async (
   const bookmarkList = bookmarks
     .map(
       (b, i) =>
-        `${i + 1}. [${b.collection}] "${b.title}" (${b.url})${b.tags.length > 0 ? ` — tags: ${b.tags.join(', ')}` : ''}`,
+        `${i + 1}. [${b.collection}] "${b.title}" (${b.url})${b.tags.length > 0 ? ` — tags: ${b.tags.join(", ")}` : ""}`,
     )
-    .join('\n');
+    .join("\n");
 
   return {
     messages: [
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: `You are helping compile a personal knowledge digest for ${periodLabel}. Write in a warm, conversational tone — this is a personal review, not a formal report.
 
 Structure the digest as follows:
@@ -58,22 +55,21 @@ export const detectDuplicatesHandler: PromptHandler<IRaindropClient> = async (
     existing_bookmarks: string;
   };
 
-  const existing: Array<{ title: string; url: string; tags: string[] }> =
-    JSON.parse(existingRaw);
+  const existing: Array<{ title: string; url: string; tags: string[] }> = JSON.parse(existingRaw);
 
   const existingList = existing
     .map(
       (b, i) =>
-        `${i + 1}. "${b.title}" — ${b.url}${b.tags.length > 0 ? ` [tags: ${b.tags.join(', ')}]` : ''}`,
+        `${i + 1}. "${b.title}" — ${b.url}${b.tags.length > 0 ? ` [tags: ${b.tags.join(", ")}]` : ""}`,
     )
-    .join('\n');
+    .join("\n");
 
   return {
     messages: [
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: `You are a duplicate-detection assistant for a bookmark manager. The user wants to save a new bookmark and you need to check whether it duplicates or closely overlaps with anything they already have.
 
 Classify any matches into exactly one of three tiers:

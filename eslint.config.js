@@ -1,13 +1,13 @@
-import eslint from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import eslintConfigPrettier from 'eslint-config-prettier';
+import serverConfig from "@kunal-singh/eslint-config/server";
 
 export default [
-  eslint.configs.recommended,
-  ...tseslint.configs.recommended,
-  ...tseslint.configs.strict,
-  eslintConfigPrettier,
+  { ignores: ["**/*.config.js", "scripts/**", "dist/**"] },
+  ...serverConfig,
   {
-    ignores: ['node_modules', 'dist', 'build', '*.config.js'],
+    languageOptions: {
+      parserOptions: {
+        tsconfigRootDir: import.meta.dirname,
+      },
+    },
   },
 ];

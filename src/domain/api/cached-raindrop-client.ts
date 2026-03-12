@@ -1,13 +1,12 @@
-import type { IRaindropClient } from './raindrop-client.interface';
-import { TTLCache } from '../../lib/ttl-cache';
-import { logger } from '../../lib/logger';
+import type { IRaindropClient } from "./raindrop-client.interface";
+import { TTLCache } from "../../lib/ttl-cache";
+import { logger } from "../../lib/logger";
 
 const TTL_MS = 5 * 60 * 1000; // 5 minutes
 
 const CACHE_KEYS = {
-  collections: 'collections',
-  tags: (collectionId?: number) =>
-    collectionId ? `tags:${collectionId}` : 'tags',
+  collections: "collections",
+  tags: (collectionId?: number) => (collectionId ? `tags:${collectionId}` : "tags"),
 } as const;
 
 export class CachedRaindropClient implements IRaindropClient {
@@ -23,10 +22,10 @@ export class CachedRaindropClient implements IRaindropClient {
     const key = CACHE_KEYS.collections;
     const cached = this.cache.get(key);
     if (cached !== undefined) {
-      logger.debug('Cache hit', { key });
+      logger.debug("Cache hit", { key });
       return cached;
     }
-    logger.debug('Cache miss', { key });
+    logger.debug("Cache miss", { key });
     const result = await this.client.getCollections();
     this.cache.set(key, result);
     return result;
@@ -48,10 +47,10 @@ export class CachedRaindropClient implements IRaindropClient {
     const key = CACHE_KEYS.tags(collectionId);
     const cached = this.cache.get(key);
     if (cached !== undefined) {
-      logger.debug('Cache hit', { key });
+      logger.debug("Cache hit", { key });
       return cached;
     }
-    logger.debug('Cache miss', { key });
+    logger.debug("Cache miss", { key });
     const result = await this.client.getTags(collectionId);
     this.cache.set(key, result);
     return result;

@@ -1,8 +1,4 @@
-import type {
-  IToolProvider,
-  IResourceProvider,
-  IPromptProvider,
-} from './providers.types';
+import type { IToolProvider, IResourceProvider, IPromptProvider } from "./providers.types";
 
 /**
  * Server manifest declaring all capabilities a specific MCP server provides

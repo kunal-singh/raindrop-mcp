@@ -1,4 +1,4 @@
-import type { Server } from '@modelcontextprotocol/sdk/server/index.js';
+import type { Server } from "@modelcontextprotocol/sdk/server/index.js";
 
 /**
  * Transport interface for MCP protocol

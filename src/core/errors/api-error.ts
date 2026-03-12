@@ -1,4 +1,4 @@
-import { BaseError } from './base-error';
+import { BaseError } from "./base-error";
 
 /**
  * API-related errors
@@ -9,7 +9,7 @@ export class APIError extends BaseError {
     public readonly statusCode: number,
     public readonly retryable: boolean = false,
   ) {
-    super(message, 'API_ERROR');
+    super(message, "API_ERROR");
   }
 }
 
@@ -19,7 +19,7 @@ export class APIError extends BaseError {
 export class NetworkError extends APIError {
   constructor(message: string) {
     super(message, 0, true);
-    this.name = 'NetworkError';
+    this.name = "NetworkError";
   }
 }
 
@@ -29,7 +29,7 @@ export class NetworkError extends APIError {
 export class AuthenticationError extends APIError {
   constructor(message: string, statusCode: number) {
     super(message, statusCode, false);
-    this.name = 'AuthenticationError';
+    this.name = "AuthenticationError";
   }
 }
 
@@ -39,7 +39,7 @@ export class AuthenticationError extends APIError {
 export class RateLimitError extends APIError {
   constructor(message: string, retryAfter?: number) {
     super(message, 429, true);
-    this.name = 'RateLimitError';
+    this.name = "RateLimitError";
     if (retryAfter) {
       this.message = `${message} (retry after ${retryAfter}s)`;
     }

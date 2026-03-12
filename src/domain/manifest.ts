@@ -1,10 +1,10 @@
-import type { ServerManifest } from '../types/manifest.types';
-import { ToolRegistry } from '../registry/tools';
-import { ResourceRegistry } from '../registry/resources';
-import { PromptRegistry } from '../registry/prompts';
-import type { IRaindropClient } from './api/raindrop-client.interface';
-import { CachedRaindropClient } from './api/cached-raindrop-client';
-import { logger } from '../lib/logger';
+import type { ServerManifest } from "../types/manifest.types";
+import { ToolRegistry } from "../registry/tools";
+import { ResourceRegistry } from "../registry/resources";
+import { PromptRegistry } from "../registry/prompts";
+import type { IRaindropClient } from "./api/raindrop-client.interface";
+import { CachedRaindropClient } from "./api/cached-raindrop-client";
+import { logger } from "../lib/logger";
 
 // Tool definitions
 import {
@@ -16,7 +16,7 @@ import {
   createCollectionTool,
   deleteCollectionTool,
   getTagsTool,
-} from './tools/definitions';
+} from "./tools/definitions";
 
 // Tool handlers
 import {
@@ -28,11 +28,11 @@ import {
   createCollectionHandler,
   deleteCollectionHandler,
   getTagsHandler,
-} from './tools/handlers';
+} from "./tools/handlers";
 
 // Resource definitions and handlers
-import { collectionsResource, tagsResource } from './resources/definitions';
-import { collectionsHandler, tagsHandler } from './resources/handlers';
+import { collectionsResource, tagsResource } from "./resources/definitions";
+import { collectionsHandler, tagsHandler } from "./resources/handlers";
 
 // Prompt definitions
 import {
@@ -42,7 +42,7 @@ import {
   suggestTagsPrompt,
   weeklyDigestPrompt,
   detectDuplicatesPrompt,
-} from './prompts/definitions';
+} from "./prompts/definitions";
 
 // Prompt handlers
 import {
@@ -52,7 +52,7 @@ import {
   suggestTagsHandler,
   weeklyDigestHandler,
   detectDuplicatesHandler,
-} from './prompts/handlers';
+} from "./prompts/handlers";
 
 /**
  * Build the complete Raindrop.io MCP server manifest
@@ -118,8 +118,8 @@ export function buildRaindropManifest(client: IRaindropClient): ServerManifest {
  */
 export async function primeCache(client: IRaindropClient): Promise<void> {
   const endpoints = [
-    { name: 'collections', fn: () => client.getCollections() },
-    { name: 'tags', fn: () => client.getTags() },
+    { name: "collections", fn: () => client.getCollections() },
+    { name: "tags", fn: () => client.getTags() },
   ];
 
   await Promise.allSettled(
@@ -128,12 +128,9 @@ export async function primeCache(client: IRaindropClient): Promise<void> {
         await fn();
         logger.info(`Cache warmed: ${name}`);
       } catch (error) {
-        logger.warn(
-          `Cache warm failed for ${name}, will populate on first request`,
-          {
-            error: error instanceof Error ? error.message : String(error),
-          },
-        );
+        logger.warn(`Cache warm failed for ${name}, will populate on first request`, {
+          error: error instanceof Error ? error.message : String(error),
+        });
       }
     }),
   );

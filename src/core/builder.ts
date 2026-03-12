@@ -1,7 +1,7 @@
-import { MCPServer } from './server';
-import type { AppConfig } from '../types/config.types';
-import type { ServerManifest } from '../types/manifest.types';
-import type { ITransport } from './transport';
+import { MCPServer } from "./server";
+import type { AppConfig } from "../types/config.types";
+import type { ServerManifest } from "../types/manifest.types";
+import type { ITransport } from "./transport";
 
 /**
  * Builder for constructing MCP servers with fluent API
@@ -52,17 +52,13 @@ export class MCPServerBuilder {
   async build(): Promise<MCPServer> {
     // Validate all dependencies
     if (!this.config) {
-      throw new Error('Config is required. Call withConfig() before build()');
+      throw new Error("Config is required. Call withConfig() before build()");
     }
     if (!this.manifest) {
-      throw new Error(
-        'Manifest is required. Call withManifest() before build()',
-      );
+      throw new Error("Manifest is required. Call withManifest() before build()");
     }
     if (!this.transport) {
-      throw new Error(
-        'Transport is required. Call withTransport() before build()',
-      );
+      throw new Error("Transport is required. Call withTransport() before build()");
     }
 
     // Create server

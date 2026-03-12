@@ -1,8 +1,5 @@
-import type {
-  PromptHandler,
-  PromptResponse,
-} from '../../../types/prompt.types';
-import type { IRaindropClient } from '../../api/raindrop-client.interface';
+import type { PromptHandler, PromptResponse } from "../../../types/prompt.types";
+import type { IRaindropClient } from "../../api/raindrop-client.interface";
 
 export const matchCollectionHandler: PromptHandler<IRaindropClient> = async (
   _name,
@@ -13,19 +10,16 @@ export const matchCollectionHandler: PromptHandler<IRaindropClient> = async (
     available_collections: string;
   };
 
-  const collections: Array<{ id: number; title: string }> =
-    JSON.parse(collectionsRaw);
+  const collections: Array<{ id: number; title: string }> = JSON.parse(collectionsRaw);
 
-  const collectionList = collections
-    .map((c) => `  - ID ${c.id}: "${c.title}"`)
-    .join('\n');
+  const collectionList = collections.map((c) => `  - ID ${c.id}: "${c.title}"`).join("\n");
 
   return {
     messages: [
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: `You are a collection-matching assistant for a bookmark manager. Your task is to match a fuzzy collection name provided by the user to the best match from the available collections list below.
 
 Apply the following three-tier confidence model:
@@ -46,9 +40,9 @@ ${collectionList}`,
         },
       },
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: `Match this collection name: "${collection_name}"`,
         },
       },
@@ -75,15 +69,15 @@ export const suggestTagsHandler: PromptHandler<IRaindropClient> = async (
 
   const tagList =
     existingTags.length > 0
-      ? existingTags.map((t) => `"${t}"`).join(', ')
-      : '(none — this is the first bookmark)';
+      ? existingTags.map((t) => `"${t}"`).join(", ")
+      : "(none — this is the first bookmark)";
 
   return {
     messages: [
       {
-        role: 'user',
+        role: "user",
         content: {
-          type: 'text',
+          type: "text",
           text: `You are a tagging assistant for a personal bookmark manager. Your goal is to suggest relevant tags for a new bookmark while keeping the tag taxonomy clean.
 
 Rules:

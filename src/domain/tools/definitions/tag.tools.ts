@@ -1,17 +1,17 @@
-import type { ToolDefinition } from '../../../types/tool.types';
+import type { ToolDefinition } from "../../../types/tool.types";
 
 /**
  * Get tags tool definition
  */
 export const getTagsTool: ToolDefinition = {
-  name: 'get_tags',
-  description: 'Get all available tags',
+  name: "get_tags",
+  description: "Get all available tags",
   inputSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       collectionId: {
-        type: 'number',
-        description: 'Filter tags by collection (optional)',
+        type: "number",
+        description: "Filter tags by collection (optional)",
       },
     },
   },

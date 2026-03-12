@@ -28,10 +28,6 @@ export interface IRaindropClient {
   ): Promise<unknown>;
   deleteRaindrop(id: number): Promise<unknown>;
   getTags(collectionId?: number): Promise<unknown>;
-  createCollection(data: {
-    title: string;
-    view?: string;
-    public?: boolean;
-  }): Promise<unknown>;
+  createCollection(data: { title: string; view?: string; public?: boolean }): Promise<unknown>;
   deleteCollection(id: number): Promise<unknown>;
 }

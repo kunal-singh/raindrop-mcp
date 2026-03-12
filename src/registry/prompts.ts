@@ -1,10 +1,6 @@
-import type {
-  PromptDefinition,
-  PromptRegistration,
-  PromptResponse,
-} from '../types/prompt.types';
-import type { IPromptProvider } from '../types/providers.types';
-import { HandlerError } from '../core/errors';
+import type { PromptDefinition, PromptRegistration, PromptResponse } from "../types/prompt.types";
+import type { IPromptProvider } from "../types/providers.types";
+import { HandlerError } from "../core/errors";
 
 /**
  * Prompt registry for managing prompt definitions and handlers

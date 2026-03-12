@@ -2,7 +2,7 @@
  * HTTP request options
  */
 export interface RequestOptions {
-  method?: 'GET' | 'POST' | 'PUT' | 'DELETE' | 'PATCH';
+  method?: "GET" | "POST" | "PUT" | "DELETE" | "PATCH";
   headers?: Record<string, string>;
   body?: string;
   params?: Record<string, string | number | boolean | undefined>;

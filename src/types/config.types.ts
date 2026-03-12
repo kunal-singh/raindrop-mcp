@@ -12,10 +12,10 @@ export interface AppConfig {
   serverVersion: string;
 
   /** Log level for application logging */
-  logLevel: 'debug' | 'info' | 'error';
+  logLevel: "debug" | "info" | "error";
 
   /** Transport type (currently only stdio) */
-  transportType: 'stdio';
+  transportType: "stdio";
 }
 
 /**

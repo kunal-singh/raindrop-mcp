@@ -17,6 +17,6 @@ export class BaseError extends Error {
  */
 export class ConfigurationError extends BaseError {
   constructor(message: string) {
-    super(message, 'CONFIGURATION_ERROR');
+    super(message, "CONFIGURATION_ERROR");
   }
 }

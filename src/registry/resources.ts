@@ -2,9 +2,9 @@ import type {
   ResourceDefinition,
   ResourceRegistration,
   ResourceResponse,
-} from '../types/resource.types';
-import type { IResourceProvider } from '../types/providers.types';
-import { HandlerError } from '../core/errors';
+} from "../types/resource.types";
+import type { IResourceProvider } from "../types/providers.types";
+import { HandlerError } from "../core/errors";
 
 /**
  * Resource registry for managing resource definitions and handlers

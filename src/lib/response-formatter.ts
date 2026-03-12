@@ -1,5 +1,5 @@
-import type { ToolResponse } from '../types/tool.types';
-import { BaseError } from '../core/errors';
+import type { ToolResponse } from "../types/tool.types";
+import { BaseError } from "../core/errors";
 
 /**
  * Format successful tool response for MCP protocol
@@ -10,7 +10,7 @@ export function formatToolResponse(data: unknown): ToolResponse {
   return {
     content: [
       {
-        type: 'text',
+        type: "text",
         text: JSON.stringify(data, null, 2),
       },
     ],
@@ -36,7 +36,7 @@ export function formatErrorResponse(error: unknown): ToolResponse {
   return {
     content: [
       {
-        type: 'text',
+        type: "text",
         text: message,
       },
     ],

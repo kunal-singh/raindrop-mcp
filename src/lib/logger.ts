@@ -1,13 +1,13 @@
-type LogLevel = 'debug' | 'info' | 'warn' | 'error';
+type LogLevel = "debug" | "info" | "warn" | "error";
 
 /**
  * Simple logger that writes to stderr (doesn't interfere with stdio transport)
  */
 export class Logger {
-  constructor(private level: LogLevel = 'info') {}
+  constructor(private level: LogLevel = "info") {}
 
   private shouldLog(level: LogLevel): boolean {
-    const levels: LogLevel[] = ['debug', 'info', 'warn', 'error'];
+    const levels: LogLevel[] = ["debug", "info", "warn", "error"];
     return levels.indexOf(level) >= levels.indexOf(this.level);
   }
 
@@ -26,23 +26,23 @@ export class Logger {
   }
 
   debug(message: string, data?: unknown) {
-    this.log('debug', message, data);
+    this.log("debug", message, data);
   }
 
   info(message: string, data?: unknown) {
-    this.log('info', message, data);
+    this.log("info", message, data);
   }
 
   warn(message: string, data?: unknown) {
-    this.log('warn', message, data);
+    this.log("warn", message, data);
   }
 
   error(message: string, data?: unknown) {
-    this.log('error', message, data);
+    this.log("error", message, data);
   }
 }
 
 /**
  * Global logger instance
  */
-export const logger = new Logger((process.env.LOG_LEVEL as LogLevel) ?? 'info');
+export const logger = new Logger((process.env.LOG_LEVEL as LogLevel) ?? "info");
