@@ -1,5 +1,5 @@
-import { HttpClientBase } from './http-client.base';
-import type { IRaindropClient } from './raindrop-client.interface';
+import { HttpClientBase } from "./http-client.base";
+import type { IRaindropClient } from "./raindrop-client.interface";
 
 /**
  * Raindrop.io API client
@@ -7,14 +7,14 @@ import type { IRaindropClient } from './raindrop-client.interface';
  */
 export class RaindropClient extends HttpClientBase implements IRaindropClient {
   constructor(token: string) {
-    super('https://api.raindrop.io/rest/v1', token);
+    super("https://api.raindrop.io/rest/v1", token);
   }
 
   /**
    * Get all collections
    */
   async getCollections() {
-    return this.request('/collections');
+    return this.request("/collections");
   }
 
   /**
@@ -59,8 +59,8 @@ export class RaindropClient extends HttpClientBase implements IRaindropClient {
     tags?: string[];
     collection?: { $id: number };
   }) {
-    return this.request('/raindrop', {
-      method: 'POST',
+    return this.request("/raindrop", {
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
@@ -78,7 +78,7 @@ export class RaindropClient extends HttpClientBase implements IRaindropClient {
     },
   ) {
     return this.request(`/raindrop/${id}`, {
-      method: 'PUT',
+      method: "PUT",
       body: JSON.stringify(data),
     });
   }
@@ -88,7 +88,7 @@ export class RaindropClient extends HttpClientBase implements IRaindropClient {
    */
   async deleteRaindrop(id: number) {
     return this.request(`/raindrop/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 
@@ -97,20 +97,16 @@ export class RaindropClient extends HttpClientBase implements IRaindropClient {
    * @param collectionId - Optional collection ID to filter tags
    */
   async getTags(collectionId?: number) {
-    const endpoint = collectionId ? `/tags/${collectionId}` : '/tags';
+    const endpoint = collectionId ? `/tags/${collectionId}` : "/tags";
     return this.request(endpoint);
   }
 
   /**
    * Create a collection
    */
-  async createCollection(data: {
-    title: string;
-    view?: string;
-    public?: boolean;
-  }) {
-    return this.request('/collection', {
-      method: 'POST',
+  async createCollection(data: { title: string; view?: string; public?: boolean }) {
+    return this.request("/collection", {
+      method: "POST",
       body: JSON.stringify(data),
     });
   }
@@ -120,7 +116,7 @@ export class RaindropClient extends HttpClientBase implements IRaindropClient {
    */
   async deleteCollection(id: number) {
     return this.request(`/collection/${id}`, {
-      method: 'DELETE',
+      method: "DELETE",
     });
   }
 }

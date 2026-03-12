@@ -1,14 +1,11 @@
-import type { ToolHandler } from '../../../types/tool.types';
-import type { IRaindropClient } from '../../api/raindrop-client.interface';
-import { formatToolResponse } from '../../../lib/response-formatter';
+import type { ToolHandler } from "../../../types/tool.types";
+import type { IRaindropClient } from "../../api/raindrop-client.interface";
+import { formatToolResponse } from "../../../lib/response-formatter";
 
 /**
  * Search bookmarks handler
  */
-export const searchBookmarksHandler: ToolHandler<IRaindropClient> = async (
-  args,
-  client,
-) => {
+export const searchBookmarksHandler: ToolHandler<IRaindropClient> = async (args, client) => {
   const result = await client.getRaindrops(args.collectionId || 0, {
     search: args.query,
     sort: args.sort,
@@ -21,10 +18,7 @@ export const searchBookmarksHandler: ToolHandler<IRaindropClient> = async (
 /**
  * Create bookmark handler
  */
-export const createBookmarkHandler: ToolHandler<IRaindropClient> = async (
-  args,
-  client,
-) => {
+export const createBookmarkHandler: ToolHandler<IRaindropClient> = async (args, client) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = { link: args.link };
   if (args.title) data.title = args.title;
@@ -39,10 +33,7 @@ export const createBookmarkHandler: ToolHandler<IRaindropClient> = async (
 /**
  * Update bookmark handler
  */
-export const updateBookmarkHandler: ToolHandler<IRaindropClient> = async (
-  args,
-  client,
-) => {
+export const updateBookmarkHandler: ToolHandler<IRaindropClient> = async (args, client) => {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const data: any = {};
   if (args.title) data.title = args.title;
@@ -57,10 +48,7 @@ export const updateBookmarkHandler: ToolHandler<IRaindropClient> = async (
 /**
  * Delete bookmark handler
  */
-export const deleteBookmarkHandler: ToolHandler<IRaindropClient> = async (
-  args,
-  client,
-) => {
+export const deleteBookmarkHandler: ToolHandler<IRaindropClient> = async (args, client) => {
   const result = await client.deleteRaindrop(args.id);
   return formatToolResponse(result);
 };

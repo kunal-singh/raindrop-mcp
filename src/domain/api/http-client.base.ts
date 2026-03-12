@@ -1,10 +1,10 @@
-import type { RequestOptions } from '../../types/api.types';
+import type { RequestOptions } from "../../types/api.types";
 import {
   APIError,
   NetworkError,
   AuthenticationError,
   RateLimitError,
-} from '../../core/errors/index';
+} from "../../core/errors/index";
 
 /**
  * Base HTTP client for external APIs
@@ -25,10 +25,7 @@ export abstract class HttpClientBase {
    * @param options - Request options
    * @returns Parsed JSON response
    */
-  protected async request<T = unknown>(
-    endpoint: string,
-    options: RequestOptions = {},
-  ): Promise<T> {
+  protected async request<T = unknown>(endpoint: string, options: RequestOptions = {}): Promise<T> {
     const url = `${this.baseUrl}${endpoint}`;
 
     // Build query string from params
@@ -37,10 +34,10 @@ export abstract class HttpClientBase {
     const fullUrl = queryString ? `${url}?${queryString}` : url;
 
     const fetchOptions: RequestInit = {
-      method: options.method || 'GET',
+      method: options.method || "GET",
       headers: {
         Authorization: `Bearer ${this.token}`,
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         ...options.headers,
       },
     };
@@ -92,15 +89,12 @@ export abstract class HttpClientBase {
 
     // Authentication errors (401, 403)
     if (statusCode === 401 || statusCode === 403) {
-      throw new AuthenticationError(
-        `Authentication failed: ${errorMessage}`,
-        statusCode,
-      );
+      throw new AuthenticationError(`Authentication failed: ${errorMessage}`, statusCode);
     }
 
     // Rate limit errors (429)
     if (statusCode === 429) {
-      const retryAfter = response.headers.get('Retry-After');
+      const retryAfter = response.headers.get("Retry-After");
       throw new RateLimitError(
         `Rate limit exceeded: ${errorMessage}`,
         retryAfter ? parseInt(retryAfter, 10) : undefined,
@@ -118,9 +112,7 @@ export abstract class HttpClientBase {
   /**
    * Build query string from params object
    */
-  private buildQueryString(
-    params: Record<string, string | number | boolean | undefined>,
-  ): string {
+  private buildQueryString(params: Record<string, string | number | boolean | undefined>): string {
     const searchParams = new URLSearchParams();
 
     for (const [key, value] of Object.entries(params)) {

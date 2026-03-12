@@ -1,4 +1,4 @@
-import { Server } from '@modelcontextprotocol/sdk/server';
+import { Server } from "@modelcontextprotocol/sdk/server";
 import {
   CallToolRequestSchema,
   GetPromptRequestSchema,
@@ -6,14 +6,10 @@ import {
   ListResourcesRequestSchema,
   ListToolsRequestSchema,
   ReadResourceRequestSchema,
-} from '@modelcontextprotocol/sdk/types.js';
-import type {
-  IToolProvider,
-  IResourceProvider,
-  IPromptProvider,
-} from '../types/providers.types';
-import type { AppConfig } from '../types/config.types';
-import { logger } from '../lib/logger';
+} from "@modelcontextprotocol/sdk/types.js";
+import type { IToolProvider, IResourceProvider, IPromptProvider } from "../types/providers.types";
+import type { AppConfig } from "../types/config.types";
+import { logger } from "../lib/logger";
 
 /**
  * MCP Server wrapper with lifecycle management
@@ -34,7 +30,7 @@ export class MCPServer {
   ) {
     this.toolProvider = toolProvider;
     this.resourceProvider = resourceProvider;
-    this.promptProvider = promptProvider;
+    if (promptProvider !== undefined) this.promptProvider = promptProvider;
 
     // Initialize MCP SDK server
     this.server = new Server(
@@ -60,7 +56,7 @@ export class MCPServer {
   private setupHandlers(): void {
     // List available tools
     this.server.setRequestHandler(ListToolsRequestSchema, async () => {
-      logger.debug('Handling ListTools request');
+      logger.debug("Handling ListTools request");
       return {
         tools: this.toolProvider.listTools(),
       };
@@ -69,7 +65,7 @@ export class MCPServer {
     // Execute a tool
     this.server.setRequestHandler(CallToolRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
-      logger.debug('Handling CallTool request', { name, args });
+      logger.debug("Handling CallTool request", { name, args });
 
       const result = await this.toolProvider.executeTool(name, args || {});
       // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -78,28 +74,25 @@ export class MCPServer {
 
     // List available resources
     this.server.setRequestHandler(ListResourcesRequestSchema, async () => {
-      logger.debug('Handling ListResources request');
+      logger.debug("Handling ListResources request");
       return {
         resources: this.resourceProvider.listResources(),
       };
     });
 
     // Read a resource
-    this.server.setRequestHandler(
-      ReadResourceRequestSchema,
-      async (request) => {
-        const { uri } = request.params;
-        logger.debug('Handling ReadResource request', { uri });
+    this.server.setRequestHandler(ReadResourceRequestSchema, async (request) => {
+      const { uri } = request.params;
+      logger.debug("Handling ReadResource request", { uri });
 
-        const result = await this.resourceProvider.readResource(uri);
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        return result as any; // SDK will validate the shape
-      },
-    );
+      const result = await this.resourceProvider.readResource(uri);
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      return result as any; // SDK will validate the shape
+    });
 
     // List available prompts
     this.server.setRequestHandler(ListPromptsRequestSchema, async () => {
-      logger.debug('Handling ListPrompts request');
+      logger.debug("Handling ListPrompts request");
       return {
         prompts: this.promptProvider?.listPrompts() ?? [],
       };
@@ -108,7 +101,7 @@ export class MCPServer {
     // Get a prompt
     this.server.setRequestHandler(GetPromptRequestSchema, async (request) => {
       const { name, arguments: args } = request.params;
-      logger.debug('Handling GetPrompt request', { name, args });
+      logger.debug("Handling GetPrompt request", { name, args });
 
       if (!this.promptProvider) {
         throw new Error(`Unknown prompt: ${name}`);

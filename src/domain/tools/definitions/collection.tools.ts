@@ -1,13 +1,13 @@
-import type { ToolDefinition } from '../../../types/tool.types';
+import type { ToolDefinition } from "../../../types/tool.types";
 
 /**
  * List collections tool definition
  */
 export const listCollectionsTool: ToolDefinition = {
-  name: 'list_collections',
-  description: 'List all collections',
+  name: "list_collections",
+  description: "List all collections",
   inputSchema: {
-    type: 'object',
+    type: "object",
     properties: {},
   },
 };
@@ -16,26 +16,26 @@ export const listCollectionsTool: ToolDefinition = {
  * Create collection tool definition
  */
 export const createCollectionTool: ToolDefinition = {
-  name: 'create_collection',
-  description: 'Create a new collection',
+  name: "create_collection",
+  description: "Create a new collection",
   inputSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       title: {
-        type: 'string',
-        description: 'Collection title',
+        type: "string",
+        description: "Collection title",
       },
       view: {
-        type: 'string',
-        description: 'View type: list, simple, grid, masonry',
-        enum: ['list', 'simple', 'grid', 'masonry'],
+        type: "string",
+        description: "View type: list, simple, grid, masonry",
+        enum: ["list", "simple", "grid", "masonry"],
       },
       public: {
-        type: 'boolean',
-        description: 'Make collection public',
+        type: "boolean",
+        description: "Make collection public",
       },
     },
-    required: ['title'],
+    required: ["title"],
   },
 };
 
@@ -43,16 +43,16 @@ export const createCollectionTool: ToolDefinition = {
  * Delete collection tool definition
  */
 export const deleteCollectionTool: ToolDefinition = {
-  name: 'delete_collection',
-  description: 'Delete a collection',
+  name: "delete_collection",
+  description: "Delete a collection",
   inputSchema: {
-    type: 'object',
+    type: "object",
     properties: {
       id: {
-        type: 'number',
-        description: 'Collection ID to delete',
+        type: "number",
+        description: "Collection ID to delete",
       },
     },
-    required: ['id'],
+    required: ["id"],
   },
 };

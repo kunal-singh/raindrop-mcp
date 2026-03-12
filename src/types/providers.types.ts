@@ -1,6 +1,6 @@
-import type { ToolDefinition, ToolResponse } from './tool.types';
-import type { ResourceDefinition, ResourceResponse } from './resource.types';
-import type { PromptDefinition, PromptResponse } from './prompt.types';
+import type { ToolDefinition, ToolResponse } from "./tool.types";
+import type { ResourceDefinition, ResourceResponse } from "./resource.types";
+import type { PromptDefinition, PromptResponse } from "./prompt.types";
 
 /**
  * Provider interface for MCP tools

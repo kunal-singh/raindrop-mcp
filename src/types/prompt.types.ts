@@ -1,8 +1,4 @@
-import type {
-  Prompt,
-  GetPromptResult,
-  PromptMessage,
-} from '@modelcontextprotocol/sdk/types.js';
+import type { Prompt, GetPromptResult, PromptMessage } from "@modelcontextprotocol/sdk/types.js";
 
 /**
  * Prompt definition matching MCP protocol Prompt type

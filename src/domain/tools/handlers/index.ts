@@ -3,12 +3,12 @@ export {
   createBookmarkHandler,
   updateBookmarkHandler,
   deleteBookmarkHandler,
-} from './bookmark.handler.js';
+} from "./bookmark.handler.js";
 
 export {
   listCollectionsHandler,
   createCollectionHandler,
   deleteCollectionHandler,
-} from './collection.handler.js';
+} from "./collection.handler.js";
 
-export { getTagsHandler } from './tag.handler.js';
+export { getTagsHandler } from "./tag.handler.js";

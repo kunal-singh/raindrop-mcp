@@ -1,28 +1,6 @@
 {
-  "compilerOptions": {
-    /* Base Options: */
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "target": "es2022",
-    "allowJs": true,
-    "resolveJsonModule": true,
-    "moduleDetection": "force",
-    "isolatedModules": true,
-    "verbatimModuleSyntax": true,
-
-    /* Strictness */
-    "strict": true,
-    "noUncheckedIndexedAccess": true,
-    "noImplicitOverride": true,
-
-    /* Let bundler handle the module resolution */
-    "module": "preserve",
-    "moduleResolution": "bundler",
-    "noEmit": true,
-
-    /* Non-DOM environment (Node.js) */
-    "lib": ["es2022"]
-  },
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "extends": "@kunal-singh/typescript-config/server",
   "include": ["src"],
-  "exclude": ["node_modules", "dist", "*.config.js"]
+  "exclude": ["node_modules", "dist"]
 }
