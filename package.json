@@ -50,13 +50,15 @@
   "packageManager": "pnpm@10.17.1",
   "devDependencies": {
     "@kunal-singh/commitlint-config": "latest",
-    "@types/node": "latest",
     "@kunal-singh/eslint-config": "latest",
     "@kunal-singh/prettier-config": "latest",
     "@kunal-singh/typescript-config": "latest",
     "@modelcontextprotocol/inspector": "^0.20.0",
+    "@types/node": "latest",
+    "eslint": "latest",
     "lefthook": "^2.1.4",
     "lint-staged": "^16.3.3",
+    "prettier": "latest",
     "tsup": "^8.5.1",
     "typescript": "^5.9.3"
   },
